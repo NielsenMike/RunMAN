@@ -17,4 +17,9 @@
       <PackageReference Include="Unosquare.RaspberryIO.Peripherals" Version="0.5.0" />
       <PackageReference Include="Unosquare.WiringPi" Version="0.5.1" />
     </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="res\background.png" />
+      <EmbeddedResource Include="res\background.png" />
+    </ItemGroup>
 </Project>
