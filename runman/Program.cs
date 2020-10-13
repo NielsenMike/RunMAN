@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Drawing;
+using System.Threading;
 using Explorer700Library;
+using Unosquare.WiringPi;
 
 namespace runman
 {
@@ -8,7 +11,11 @@ namespace runman
         static void Main(string[] args)
         {
             Explorer700 explorer700 = new Explorer700();
-            Console.WriteLine("Hello World!");
+            Image background = Image.FromFile("/res/background.png");
+            
+            explorer700.Display.Update();
+            explorer700.Display.Graphics.DrawImage(background, new Point(128,64));
+            explorer700.Display.Update();
         }
     }
 }
