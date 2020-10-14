@@ -22,6 +22,9 @@
       <None Remove="res\background.png" />
       <EmbeddedResource Include="res\background.png" />
       <None Remove="res\test.png" />
-      <EmbeddedResource Include="res\test.png" />
+      <None Remove="res\runman1.png" />
+      <EmbeddedResource Include="res\runman1.png" />
+      <None Remove="res\runman2.png" />
+      <EmbeddedResource Include="res\runman2.png" />
     </ItemGroup>
 </Project>
