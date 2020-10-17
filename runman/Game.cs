@@ -18,6 +18,7 @@ namespace runman
         private Explorer700 explorer700;
         public Resources Resources { get; }
         public CollisonDetection CollisonDetection { get; }
+        public Score Score { get; }
         private bool running;
         private List<GameObject> gameObjects;
         private Stopwatch gameWatch;
@@ -31,6 +32,7 @@ namespace runman
             running = false;
             explorer700 = exp;
             Resources = new Resources();
+            Score = new Score();
             CollisonDetection = new CollisonDetection();
             gameObjects = new List<GameObject>();
             InitResources();
@@ -64,10 +66,19 @@ namespace runman
             gameObjects.Remove(gameObject);
         }
 
-        public void Start()
+        public void Start(object source, string args)
         {
             running = true;
             gameWatch = Stopwatch.StartNew();
+        }
+
+        public void Stop(object source, string args)
+        {
+            explorer700.Buzzer.Beep(1000);
+            explorer700.Led1.Enabled = false;
+            explorer700.Led2.Enabled = false;
+            explorer700.Display.Clear();
+            Score.PrintScore();
         }
 
         public void Run()
@@ -90,6 +101,7 @@ namespace runman
                 g.Update();
             }
             CollisonDetection.DetectCollison();
+            Score.UpdateScore();
         }
 
         private void Draw()

@@ -6,9 +6,10 @@ namespace runman
     public class InputHandler
     {
         private Explorer700 explorer700;
-
-        public delegate void InputEventHandler(object source, string args);
-        public event InputEventHandler ReceiveInput;
+        public delegate void InputKeyPressed(object source, string args);
+        public event InputKeyPressed JumpEvent;
+        public event InputKeyPressed StopEvent;
+        public event InputKeyPressed StartEvent;
 
         public InputHandler(Explorer700 exp)
         {
@@ -21,54 +22,16 @@ namespace runman
         {
             if(key.Keys == Keys.Center)
             {
-                this.CenterKeyPressed();
+                StopEvent?.Invoke(this, "Stop");
             }
             else if (key.Keys == Keys.Up)
             {
-                this.UpKeyPressed();
+                JumpEvent?.Invoke(this, "Jump");
             }
             else if (key.Keys == Keys.Right)
             {
-                this.RightKeyPressed();
+                StartEvent?.Invoke(this, "Start");
             }
-        }
-
-        //HandleEvent - Center Key Pressed
-        private void CenterKeyPressed()
-        {
-            //Shutting down the Mainframe :)
-            explorer700.Buzzer.Beep(1000);
-            explorer700.Led1.Enabled = false;
-            explorer700.Led2.Enabled = false;
-            explorer700.Display.Clear();
-
-            //Fire Event To Subscribers
-            ReceiveInput?.Invoke(this, "Reset");
-
-
-            Console.WriteLine("Center Key Pressed: Event Fired");
-        }
-
-
-        //HandleEvent - Up Key Pressed
-        private void UpKeyPressed()
-        {
-            //Fire Event to Runman
-            ReceiveInput?.Invoke(this, "Jump");
-
-            Console.WriteLine("Up Key Pressed: Event Fired");
-
-        }
-
-
-        //HandleEvent - Right Key Pressed
-        private void RightKeyPressed()
-        {
-            //Fire Event to Subscribers
-            ReceiveInput?.Invoke(this, "Start");
-
-            Console.WriteLine("Right Key Pressed: Event Fired");
-
         }
     }
 }

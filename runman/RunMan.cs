@@ -17,5 +17,10 @@ namespace runman
             int x = Position.X + 1;
             Position = new Point(x, Position.Y);
         }
+
+        public void Jump(object source, string args)
+        {
+            Console.WriteLine("Jump");
+        }
     }
 }
