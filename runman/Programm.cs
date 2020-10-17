@@ -10,6 +10,13 @@ namespace runman
         {
             Explorer700 explorer700 = new Explorer700();
             Game game = new Game(explorer700);
+
+            //Instantiate new InputHandler Object
+            InputHandler inputHandler = new InputHandler(explorer700);
+
+            //Instantiate new Score Object
+            Score score = new Score(inputHandler);
+
             
             GameObject backgorund = new GameObject(new Point(64,32), 
                 game.Resources.GetResource("background"));
