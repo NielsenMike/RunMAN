@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Reflection;
@@ -33,6 +34,7 @@ namespace runman
             Resources.Load("background.png", "background");
             Resources.Load("runman1.png", "runman1");
             Resources.Load("runman2.png", "rundman2");
+            Resources.Load("stone.png", "stone");
         }
 
         public void CreateGameObjext(GameObject gameObject)
@@ -55,20 +57,29 @@ namespace runman
             while (running)
             {
                 BeginScene();
+                Update();
                 Draw();
                 EndScene();
+                Thread.Sleep(160);
             }
             EndScene();
+        }
+
+        private void Update()
+        {
+            foreach (GameObject g in gameObjects)
+            {
+                g.Update();
+            }
         }
 
         private void Draw()
         {
             foreach (GameObject g in gameObjects)
             {
-                explorer700.Display.Graphics.DrawImage(g.graphicImage, 
-                    PositionToScreen(g.position, g.graphicImage.Size));
+                explorer700.Display.Graphics.DrawImage(g.GraphicImage,
+                    PositionToScreen(g.Position, g.GraphicImage.Size));
             }
-            Thread.Sleep(160);
         }
 
         public static Point PositionToScreen(Point position, Size imageSize)

@@ -17,9 +17,13 @@ namespace runman
             GameObject runman = new GameObject(new Point(16,16), 
                 game.Resources.GetResource("runman1"));
             
+            GameObject stone = new GameObject(new Point(40,16), 
+                game.Resources.GetResource("stone"));
+            
             game.Start();
             game.CreateGameObjext(backgorund);
             game.CreateGameObjext(runman);
+            game.CreateGameObjext(stone);
             game.Run();
         }
     }

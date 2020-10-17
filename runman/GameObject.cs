@@ -4,19 +4,31 @@ namespace runman
 {
     public class GameObject
     {
-        public Point position { get; set; }
-        public Image graphicImage;
+        public Point Position { get; set; }
+        public Image GraphicImage { get; set; }
+        public BoxCollider BoxCollider { get; }
 
         public GameObject()
         {
-            position = Point.Empty;
-            graphicImage = null;
+            Position = Point.Empty;
+            GraphicImage = null;
+            BoxCollider = null;
         }
 
         public GameObject(Point position, Image graphicImage)
         {
-            this.position = position;
-            this.graphicImage = graphicImage;
+            this.Position = position;
+            this.GraphicImage = graphicImage;
+        }
+
+        public void Update()
+        {
+            
+        }
+
+        public void CreateBoxCollider()
+        {
+            
         }
     }
 }
