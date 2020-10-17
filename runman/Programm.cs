@@ -30,8 +30,8 @@ namespace runman
             
             game.Start();
             game.CreateGameObject(backgorund);
-            game.CreateRunMan(runman);
-            game.CreateStone(stone);
+            game.CreateGameObject(runman);
+            game.CreateGameObject(stone);
             game.Run();
 
 

@@ -25,6 +25,8 @@ namespace runman
                 {
                     if (box1 != box2)
                     {
+                        box1.Update();
+                        box2.Update();
                         if (box1.Rectangle.X < box2.Rectangle.X + box2.Rectangle.Width &&
                             box1.Rectangle.X + box1.Rectangle.Width > box2.Rectangle.X &&
                             box1.Rectangle.Y < box2.Rectangle.Y + box2.Rectangle.Height &&
