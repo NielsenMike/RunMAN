@@ -7,7 +7,7 @@ namespace runman
         public Background(Point position, Image graphicImage) : base(position, graphicImage)
         {
         }
-
+        
         public override void Update()
         {
         }

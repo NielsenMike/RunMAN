@@ -42,7 +42,7 @@ namespace runman
 
         }
 
-        public void Jump()
+        public void Jump(object source, string args)
         {
             if(jumping == true)
             {
@@ -60,8 +60,5 @@ namespace runman
             int y = 15;
             Position = new Point(x, y);
         }
-
-
-
     }
 }

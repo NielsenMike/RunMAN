@@ -5,9 +5,14 @@ namespace runman
 {
     public class Score
     {
-        InputHandler handler;
-        private long scorevalue = 0;
-        Stopwatch Timer = new Stopwatch();
+        private long scorevalue;
+        private Stopwatch Timer;
+
+        public Score()
+        {
+            Timer = Stopwatch.StartNew();
+            scorevalue = 0;
+        }
 
         public long Scorevalue {
             set
@@ -17,24 +22,6 @@ namespace runman
             get
             {
                 return scorevalue;
-            }
-        }
-
-        public Score(InputHandler inhandler)
-        {
-            handler = inhandler;
-            handler.ReceiveInput += HandleEvent;
-        }
-
-        public void HandleEvent(object source, string arg)
-        {
-            if(arg == "Start")
-            {
-                UpdateScore();
-            }
-            if(arg == "Reset")
-            {
-                PrintScore();
             }
         }
 
@@ -50,6 +37,7 @@ namespace runman
             scorevalue = Timer.ElapsedMilliseconds;
             scorevalue = scorevalue / 100;
             Console.WriteLine("Final Score was: " + Scorevalue + ". Congratulations!");
+            scorevalue = 0;
         }
     }
 }

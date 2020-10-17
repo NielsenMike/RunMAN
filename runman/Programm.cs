@@ -15,10 +15,7 @@ namespace runman
             //Instantiate new InputHandler Object
             InputHandler inputHandler = new InputHandler(explorer700);
 
-            //Instantiate new Score Object
-            Score score = new Score(inputHandler);
 
-            
             Background backgorund = new Background(new Point(64,32), 
                 game.Resources.GetResource("background"));
             
@@ -27,14 +24,16 @@ namespace runman
             
             Stone stone = new Stone(new Point(40,16), 
                 game.Resources.GetResource("stone"));
+
+            inputHandler.JumpEvent += runman.Jump;
+            inputHandler.StartEvent += game.Start;
+            inputHandler.StopEvent += game.Stop;
             
-            game.Start();
+            game.Start(null, String.Empty);
             game.CreateGameObject(backgorund);
-            game.CreateRunMan(runman);
-            game.CreateStone(stone);
+            game.CreateGameObject(runman);
+            game.CreateGameObject(stone);
             game.Run();
-
-
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Reflection;
@@ -17,10 +18,13 @@ namespace runman
         private Explorer700 explorer700;
         public Resources Resources { get; }
         public CollisonDetection CollisonDetection { get; }
+        public Score Score { get; }
         private bool running;
         private List<GameObject> gameObjects;
+        private Stopwatch gameWatch;
 
-        private long frameMilliSec = 160;
+        private long frameMs = 160;
+        private long currentMs = 0;
 
 
         public Game(Explorer700 exp)
@@ -28,6 +32,7 @@ namespace runman
             running = false;
             explorer700 = exp;
             Resources = new Resources();
+            Score = new Score();
             CollisonDetection = new CollisonDetection();
             gameObjects = new List<GameObject>();
             InitResources();
@@ -41,22 +46,19 @@ namespace runman
             Resources.Load("runman2.png", "rundman2");
             Resources.Load("stone.png", "stone");
         }
-
-        public void CreateRunMan(RunMan runMan)
-        {
-            gameObjects.Add(runMan);
-            CollisonDetection.RegisterBoxCollider(runMan.BoxCollider);
-        }
         
-        public void CreateStone(Stone stone)
-        {
-            gameObjects.Add(stone);
-            CollisonDetection.RegisterBoxCollider(stone.BoxCollider);
-        }
         
         public void CreateGameObject(GameObject gameObject)
         {
             gameObjects.Add(gameObject);
+            foreach (Component c in gameObject.Components)
+            {
+                if (c != null && c.GetType() == typeof(BoxCollider))
+                {
+                    BoxCollider box = (BoxCollider) c;
+                    CollisonDetection.Colliders.Add(box);
+                }
+            }
         }
         
         public void DestroyGameObjext(GameObject gameObject)
@@ -64,30 +66,29 @@ namespace runman
             gameObjects.Remove(gameObject);
         }
 
-        public void Start()
+        public void Start(object source, string args)
         {
             running = true;
+            gameWatch = Stopwatch.StartNew();
+        }
+
+        public void Stop(object source, string args)
+        {
+            explorer700.Buzzer.Beep(1000);
+            explorer700.Led1.Enabled = false;
+            explorer700.Led2.Enabled = false;
+            explorer700.Display.Clear();
+            Score.PrintScore();
         }
 
         public void Run()
         {
-            var watch = System.Diagnostics.Stopwatch.StartNew();
             while (running)
             {
-                watch.Start();
-                long elapsedMs = 0;
-
                 BeginScene();
                 Update();
                 Draw();
                 EndScene();
-
-                watch.Stop();
-                elapsedMs = watch.ElapsedMilliseconds;
-                watch.Reset();
-
-                int timeLeft = (int)(frameMilliSec - elapsedMs);
-                Thread.Sleep(timeLeft);
             }
             EndScene();
         }
@@ -99,12 +100,8 @@ namespace runman
             {
                 g.Update();
             }
-
-            foreach (BoxCollider box in CollisonDetection.Colliders)
-            {
-                box.Update();
-            }
             CollisonDetection.DetectCollison();
+            Score.UpdateScore();
         }
 
         private void Draw()
@@ -126,11 +123,17 @@ namespace runman
         
         private void BeginScene()
         {
+            gameWatch.Start();
+            currentMs = 0;
             explorer700.Display.Update();
         }
 
         private void EndScene()
         {
+            gameWatch.Stop();
+            currentMs = gameWatch.ElapsedMilliseconds;
+            gameWatch.Reset();
+            Thread.Sleep((int) (frameMs - currentMs));
             explorer700.Display.Update();
         }
 
