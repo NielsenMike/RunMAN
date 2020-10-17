@@ -20,8 +20,9 @@ namespace runman
             }
         }
 
-        public Score()
+        public Score(InputHandler inhandler)
         {
+            inhandler = handler;
             handler.ReceiveInput += HandleEvent;
         }
 
@@ -39,6 +40,7 @@ namespace runman
 
         public void UpdateScore()
         {
+            Console.WriteLine("Game Started");
             Timer.Start();
         }
 
