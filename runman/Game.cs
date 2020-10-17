@@ -20,6 +20,9 @@ namespace runman
         private bool running;
         private List<GameObject> gameObjects;
 
+        private long frameMilliSec = 160;
+
+
         public Game(Explorer700 exp)
         {
             running = false;
@@ -70,16 +73,27 @@ namespace runman
 
         public void Run()
         {
+            var watch = System.Diagnostics.Stopwatch.StartNew();
             while (running)
             {
+                watch.Start();
+                long elapsedMs = 0;
+
                 BeginScene();
                 Update();
                 Draw();
                 EndScene();
-                Thread.Sleep(160);
+
+                watch.Stop();
+                elapsedMs = watch.ElapsedMilliseconds;
+                watch.Reset();
+
+                int timeLeft = (int)(frameMilliSec - elapsedMs);
+                Thread.Sleep(timeLeft);
             }
             EndScene();
         }
+
 
         private void Update()
         {

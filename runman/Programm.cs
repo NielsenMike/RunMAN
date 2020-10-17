@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using System.Threading;
 using Explorer700Library;
 
 namespace runman
@@ -10,6 +11,13 @@ namespace runman
         {
             Explorer700 explorer700 = new Explorer700();
             Game game = new Game(explorer700);
+
+            //Instantiate new InputHandler Object
+            InputHandler inputHandler = new InputHandler(explorer700);
+
+            //Instantiate new Score Object
+            Score score = new Score();
+
             
             Background backgorund = new Background(new Point(64,32), 
                 game.Resources.GetResource("background"));
@@ -25,6 +33,8 @@ namespace runman
             game.CreateRunMan(runman);
             game.CreateStone(stone);
             game.Run();
+
+
         }
     }
 }
