@@ -16,6 +16,7 @@ namespace runman
         public static int ScreenHeight = 64;
         public static int ScreenWidth = 128;
         private Explorer700 explorer700;
+        public InputHandler InputHandler { get; }
         public Resources Resources { get; }
         public CollisonDetection CollisonDetection { get; }
         public Score Score { get; }
@@ -33,9 +34,11 @@ namespace runman
             explorer700 = exp;
             Resources = new Resources();
             Score = new Score();
+            InputHandler = new InputHandler(exp);
             CollisonDetection = new CollisonDetection();
             gameObjects = new List<GameObject>();
             InitResources();
+            CollisonDetection.CollisionEvent += Stop;
         }
 
         // Init new resources here!!
@@ -64,21 +67,31 @@ namespace runman
         public void DestroyGameObjext(GameObject gameObject)
         {
             gameObjects.Remove(gameObject);
+            foreach (Component c in gameObject.Components)
+            {
+                if (c != null && c.GetType() == typeof(BoxCollider))
+                {
+                    BoxCollider box = (BoxCollider) c;
+                    CollisonDetection.Colliders.Remove(box);
+                }
+            }
         }
 
-        public void Start(object source, string args)
+        public void Start()
         {
             running = true;
             gameWatch = Stopwatch.StartNew();
+            Score.StartScore();
         }
 
-        public void Stop(object source, string args)
+        public void Stop()
         {
-            explorer700.Buzzer.Beep(1000);
+            explorer700.Buzzer.Beep(0);
             explorer700.Led1.Enabled = false;
             explorer700.Led2.Enabled = false;
             explorer700.Display.Clear();
             Score.PrintScore();
+            running = false;
         }
 
         public void Run()
@@ -101,7 +114,6 @@ namespace runman
                 g.Update();
             }
             CollisonDetection.DetectCollison();
-            Score.UpdateScore();
         }
 
         private void Draw()
@@ -133,7 +145,8 @@ namespace runman
             gameWatch.Stop();
             currentMs = gameWatch.ElapsedMilliseconds;
             gameWatch.Reset();
-            Thread.Sleep((int) (frameMs - currentMs));
+            int frameTime = (int) (frameMs - currentMs);
+            Thread.Sleep(frameTime > 0 ? frameTime : 0);
             explorer700.Display.Update();
         }
 

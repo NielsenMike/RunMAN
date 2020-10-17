@@ -5,6 +5,10 @@ namespace runman
 {
     public class CollisonDetection
     {
+        public delegate void OnCollison();
+        
+        public event OnCollison CollisionEvent;
+        
         public List<BoxCollider> Colliders { get;}
 
         public CollisonDetection()
@@ -32,7 +36,7 @@ namespace runman
                             box1.Rectangle.Y < box2.Rectangle.Y + box2.Rectangle.Height &&
                             box1.Rectangle.Y + box1.Rectangle.Height > box2.Rectangle.Y) 
                         {
-                            Console.WriteLine("Collison");
+                            CollisionEvent?.Invoke();
                         }
                     }
                 }

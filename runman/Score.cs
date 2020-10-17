@@ -25,10 +25,9 @@ namespace runman
             }
         }
 
-        public void UpdateScore()
+        public void StartScore()
         {
-            Console.WriteLine("Game Started");
-            Timer.Start();
+            Timer.Reset();
         }
 
         public void PrintScore()

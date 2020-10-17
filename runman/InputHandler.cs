@@ -6,7 +6,7 @@ namespace runman
     public class InputHandler
     {
         private Explorer700 explorer700;
-        public delegate void InputKeyPressed(object source, string args);
+        public delegate void InputKeyPressed();
         public event InputKeyPressed JumpEvent;
         public event InputKeyPressed StopEvent;
         public event InputKeyPressed StartEvent;
@@ -22,15 +22,15 @@ namespace runman
         {
             if(key.Keys == Keys.Center)
             {
-                StopEvent?.Invoke(this, "Stop");
+                StopEvent?.Invoke();
             }
             else if (key.Keys == Keys.Up)
             {
-                JumpEvent?.Invoke(this, "Jump");
+                JumpEvent?.Invoke();
             }
             else if (key.Keys == Keys.Right)
             {
-                StartEvent?.Invoke(this, "Start");
+                StartEvent?.Invoke();
             }
         }
     }
