@@ -14,10 +14,10 @@ namespace runman
             GameObject backgorund = new GameObject(new Point(64,32), 
                 game.Resources.GetResource("background"));
             
-            GameObject runman = new GameObject(new Point(16,16), 
+            RunMan runman = new RunMan(new Point(16,16), 
                 game.Resources.GetResource("runman1"));
             
-            GameObject stone = new GameObject(new Point(40,16), 
+            Stone stone = new Stone(new Point(40,16), 
                 game.Resources.GetResource("stone"));
             
             game.Start();
