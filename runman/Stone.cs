@@ -9,5 +9,9 @@ namespace runman
         {
             BoxCollider = new BoxCollider(this);
         }
+
+        public override void Update()
+        {
+        }
     }
 }

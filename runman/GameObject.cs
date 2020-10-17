@@ -2,7 +2,7 @@ using System.Drawing;
 
 namespace runman
 {
-    public class GameObject
+    public abstract class GameObject
     {
         public Point Position { get; set; }
         public Image GraphicImage { get; set; }
@@ -19,7 +19,6 @@ namespace runman
             this.GraphicImage = graphicImage;
         }
 
-        public void Update()
-        { }
+        public abstract void Update();
     }
 }

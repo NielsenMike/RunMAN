@@ -11,7 +11,7 @@ namespace runman
             Explorer700 explorer700 = new Explorer700();
             Game game = new Game(explorer700);
             
-            GameObject backgorund = new GameObject(new Point(64,32), 
+            Background backgorund = new Background(new Point(64,32), 
                 game.Resources.GetResource("background"));
             
             RunMan runman = new RunMan(new Point(16,16), 
@@ -21,9 +21,9 @@ namespace runman
                 game.Resources.GetResource("stone"));
             
             game.Start();
-            game.CreateGameObjext(backgorund);
-            game.CreateGameObjext(runman);
-            game.CreateGameObjext(stone);
+            game.CreateGameObject(backgorund);
+            game.CreateRunMan(runman);
+            game.CreateStone(stone);
             game.Run();
         }
     }

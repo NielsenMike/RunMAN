@@ -14,8 +14,9 @@ namespace runman
     {
         public static int ScreenHeight = 64;
         public static int ScreenWidth = 128;
-        public Resources Resources { get; private set; }
         private Explorer700 explorer700;
+        public Resources Resources { get; }
+        public CollisonDetection CollisonDetection { get; }
         private bool running;
         private List<GameObject> gameObjects;
 
@@ -23,6 +24,8 @@ namespace runman
         {
             running = false;
             explorer700 = exp;
+            Resources = new Resources();
+            CollisonDetection = new CollisonDetection();
             gameObjects = new List<GameObject>();
             InitResources();
         }
@@ -30,14 +33,27 @@ namespace runman
         // Init new resources here!!
         private void InitResources()
         {
-            Resources = new Resources();
             Resources.Load("background.png", "background");
             Resources.Load("runman1.png", "runman1");
             Resources.Load("runman2.png", "rundman2");
             Resources.Load("stone.png", "stone");
         }
 
-        public void CreateGameObjext(GameObject gameObject)
+        public void CreateRunMan(RunMan runMan)
+        {
+            gameObjects.Add(runMan);
+            gameObjects.Add(runMan.BoxCollider);
+            CollisonDetection.RegisterBoxCollider(runMan.BoxCollider);
+        }
+        
+        public void CreateStone(Stone stone)
+        {
+            gameObjects.Add(stone);
+            gameObjects.Add(stone.BoxCollider);
+            CollisonDetection.RegisterBoxCollider(stone.BoxCollider);
+        }
+        
+        public void CreateGameObject(GameObject gameObject)
         {
             gameObjects.Add(gameObject);
         }
@@ -71,12 +87,14 @@ namespace runman
             {
                 g.Update();
             }
+            CollisonDetection.DetectCollison();
         }
 
         private void Draw()
         {
             foreach (GameObject g in gameObjects)
             {
+                DebugDraw(g);
                 explorer700.Display.Graphics.DrawImage(g.GraphicImage,
                     PositionToScreen(g.Position, g.GraphicImage.Size));
             }
@@ -98,5 +116,30 @@ namespace runman
         {
             explorer700.Display.Update();
         }
+
+        private void DebugDraw(GameObject g)
+        {
+            Point screenPoint = new Point();
+            if (g.GetType() == typeof(RunMan))
+            {
+                RunMan runMan = (RunMan) g;
+                Point p = new Point(runMan.BoxCollider.Rectangle.X,
+                    runMan.BoxCollider.Rectangle.Y);
+                screenPoint = PositionToScreen(p, runMan.GraphicImage.Size);
+            }
+            else if (g.GetType() == typeof(Stone))
+            {
+                Stone stone = (Stone) g;
+                Point p = new Point(stone.BoxCollider.Rectangle.X,
+                    stone.BoxCollider.Rectangle.Y);
+                screenPoint = PositionToScreen(p, stone.GraphicImage.Size);
+            }
+            explorer700.Display.Graphics.DrawRectangle(Pens.Black, 
+                screenPoint.X,
+                screenPoint.Y, 
+                g.GraphicImage.Width, 
+                g.GraphicImage.Height);
+        }
+        
     }
 }

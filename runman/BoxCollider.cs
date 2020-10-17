@@ -2,21 +2,26 @@ using System.Drawing;
 
 namespace runman
 {
-    public class BoxCollider
+    public class BoxCollider : GameObject
     {
-        private GameObject gameObject;
-        public Rectangle Rectangle { get; }
+        private GameObject owner;
+        public Rectangle Rectangle { get; private set; }
         
-        public BoxCollider(GameObject g)
+        public BoxCollider(GameObject gameObject)
         {
-            gameObject = g;
-            Rectangle = new Rectangle(gameObject.Position.X, 
-                gameObject.Position.Y, 
-                gameObject.GraphicImage.Width,
-                gameObject.GraphicImage.Height);
+            owner = gameObject;
+            Rectangle = new Rectangle(owner.Position.X, 
+                owner.Position.Y, 
+                owner.GraphicImage.Width,
+                owner.GraphicImage.Height);
         }
-        
-        
-        
+
+        public override void Update()
+        {
+            Rectangle = new Rectangle(owner.Position.X, 
+                owner.Position.Y, 
+                owner.GraphicImage.Width,
+                owner.GraphicImage.Height);
+        }
     }
 }
