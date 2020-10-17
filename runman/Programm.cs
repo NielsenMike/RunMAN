@@ -16,7 +16,7 @@ namespace runman
             InputHandler inputHandler = new InputHandler(explorer700);
 
             //Instantiate new Score Object
-            Score score = new Score();
+            Score score = new Score(inputHandler);
 
             
             Background backgorund = new Background(new Point(64,32), 

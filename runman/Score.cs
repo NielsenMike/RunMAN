@@ -22,7 +22,7 @@ namespace runman
 
         public Score(InputHandler inhandler)
         {
-            inhandler = handler;
+            handler = inhandler;
             handler.ReceiveInput += HandleEvent;
         }
 
