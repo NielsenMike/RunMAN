@@ -2,11 +2,11 @@ using System.Drawing;
 
 namespace runman
 {
-    public class BoxCollider : GameObject
+    public class BoxCollider
     {
         private GameObject owner;
         public Rectangle Rectangle { get; private set; }
-        
+
         public BoxCollider(GameObject gameObject)
         {
             owner = gameObject;
@@ -16,7 +16,7 @@ namespace runman
                 owner.GraphicImage.Height);
         }
 
-        public override void Update()
+        public void Update()
         {
             Rectangle = new Rectangle(owner.Position.X, 
                 owner.Position.Y, 

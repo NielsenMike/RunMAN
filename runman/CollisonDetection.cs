@@ -5,18 +5,23 @@ namespace runman
 {
     public class CollisonDetection
     {
-        private List<BoxCollider> colliders = new List<BoxCollider>();
+        public List<BoxCollider> Colliders { get;}
+
+        public CollisonDetection()
+        {
+            Colliders = new List<BoxCollider>();
+        }
 
         public void RegisterBoxCollider(BoxCollider boxCollider)
         {
-            colliders.Add(boxCollider);
+            Colliders.Add(boxCollider);
         }
 
         public void DetectCollison()
         {
-            foreach (BoxCollider box1 in colliders)
+            foreach (BoxCollider box1 in Colliders)
             {
-                foreach (BoxCollider box2 in colliders)
+                foreach (BoxCollider box2 in Colliders)
                 {
                     if (box1 != box2)
                     {

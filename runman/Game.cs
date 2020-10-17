@@ -45,14 +45,12 @@ namespace runman
         public void CreateRunMan(RunMan runMan)
         {
             gameObjects.Add(runMan);
-            gameObjects.Add(runMan.BoxCollider);
             CollisonDetection.RegisterBoxCollider(runMan.BoxCollider);
         }
         
         public void CreateStone(Stone stone)
         {
             gameObjects.Add(stone);
-            gameObjects.Add(stone.BoxCollider);
             CollisonDetection.RegisterBoxCollider(stone.BoxCollider);
         }
         
@@ -100,6 +98,11 @@ namespace runman
             foreach (GameObject g in gameObjects)
             {
                 g.Update();
+            }
+
+            foreach (BoxCollider box in CollisonDetection.Colliders)
+            {
+                box.Update();
             }
             CollisonDetection.DetectCollison();
         }
