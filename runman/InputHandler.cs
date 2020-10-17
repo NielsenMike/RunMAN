@@ -43,7 +43,10 @@ namespace runman
             explorer700.Display.Clear();
 
             //Fire Event To Subscribers
-            ReceiveInput(this, "Reset");
+            ReceiveInput?.Invoke(this, "Reset");
+
+
+            Console.WriteLine("Center Key Pressed: Event Fired");
         }
 
 
@@ -51,7 +54,9 @@ namespace runman
         private void UpKeyPressed()
         {
             //Fire Event to Runman
-            ReceiveInput(this, "Jump");
+            ReceiveInput?.Invoke(this, "Jump");
+
+            Console.WriteLine("Up Key Pressed: Event Fired");
 
         }
 
@@ -60,7 +65,9 @@ namespace runman
         private void RightKeyPressed()
         {
             //Fire Event to Subscribers
-            ReceiveInput(this, "Start");
+            ReceiveInput?.Invoke(this, "Start");
+
+            Console.WriteLine("Right Key Pressed: Event Fired");
 
         }
     }

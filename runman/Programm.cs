@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using System.Threading;
 using Explorer700Library;
 
 namespace runman
@@ -15,7 +16,7 @@ namespace runman
             InputHandler inputHandler = new InputHandler(explorer700);
 
             //Instantiate new Score Object
-            Score score = new Score(inputHandler);
+            Score score = new Score();
 
             
             GameObject backgorund = new GameObject(new Point(64,32), 
@@ -32,6 +33,8 @@ namespace runman
             game.CreateGameObjext(runman);
             game.CreateGameObjext(stone);
             game.Run();
+
+
         }
     }
 }

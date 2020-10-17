@@ -10,7 +10,7 @@
         <CustomCommands>
           <Command>
             <type>AfterBuild</type>
-            <command>scp -r "/Users/lenn/Documents/GitHub/runman/runman" lenny@10.180.254.51:/home/lenny/Documents</command>
+            <command>scp -r "/Users/lenn/Documents/GitHub/runman/runman" lenny@10.180.254.51:/home/lenny/Documents2</command>
             <externalConsole>True</externalConsole>
           </Command>
         </CustomCommands>
