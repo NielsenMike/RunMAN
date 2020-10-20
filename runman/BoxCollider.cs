@@ -4,7 +4,7 @@ namespace runman
 {
     public class BoxCollider : Component
     {
-        private GameObject owner;
+        public GameObject owner { get; }
         public Rectangle Rectangle { get; private set; }
 
         public BoxCollider(GameObject gameObject)
@@ -17,7 +17,7 @@ namespace runman
                 owner.GraphicImage.Height);
         }
 
-        public void Update()
+        public override void Update()
         {
             Rectangle = new Rectangle(owner.Position.X, 
                 owner.Position.Y, 

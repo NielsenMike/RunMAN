@@ -5,7 +5,7 @@ namespace runman
 {
     public class CollisonDetection
     {
-        public delegate void OnCollison();
+        public delegate void OnCollison(GameObject boxCollider, GameObject other);
         
         public event OnCollison CollisionEvent;
         
@@ -23,20 +23,18 @@ namespace runman
 
         public void DetectCollison()
         {
-            foreach (BoxCollider box1 in Colliders)
+            foreach (BoxCollider box1 in Colliders.ToArray())
             {
-                foreach (BoxCollider box2 in Colliders)
+                foreach (BoxCollider box2 in Colliders.ToArray())
                 {
                     if (box1 != box2)
                     {
-                        box1.Update();
-                        box2.Update();
                         if (box1.Rectangle.X < box2.Rectangle.X + box2.Rectangle.Width &&
                             box1.Rectangle.X + box1.Rectangle.Width > box2.Rectangle.X &&
                             box1.Rectangle.Y < box2.Rectangle.Y + box2.Rectangle.Height &&
                             box1.Rectangle.Y + box1.Rectangle.Height > box2.Rectangle.Y) 
                         {
-                            CollisionEvent?.Invoke();
+                            CollisionEvent?.Invoke(box1.owner, box2.owner);
                         }
                     }
                 }

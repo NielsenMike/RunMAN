@@ -53,7 +53,6 @@ namespace runman
             stones.Add(stone);
             Game.CreateGameObject(background);
             Game.CreateGameObject(runman);
-
         }
 
         public void InitEvents()
@@ -62,10 +61,14 @@ namespace runman
             Game.InputHandler.StartEvent += Game.Start;
             Game.InputHandler.StopEvent += Game.Stop;
             
-            Game.CollisonDetection.CollisionEvent += () =>
+            Game.CollisonDetection.CollisionEvent += (GameObject g, GameObject other) =>
             {
-                runman.Reset();
-                Game.Score.PrintScore();
+                if (g.GetType() == typeof(RunMan) && other.GetType() == typeof(Stone))
+                {
+                    runman.Reset();
+                    Game.DestroyGameObjext(stone);
+                    Game.Score.PrintScore();
+                }
             };
         }
 
@@ -82,6 +85,7 @@ namespace runman
                 programm.Game.Run();
                 programm.CreateRandomStone();
             }
+            programm.Game.Stop();
         }
     }
 }

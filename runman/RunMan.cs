@@ -24,7 +24,8 @@ namespace runman
 
         public override void Update()
         {
-
+            BoxCollider.Update();
+            
             if(jumping == true)
             {
                 if (Position.Y <= maxHeight && up == true)
