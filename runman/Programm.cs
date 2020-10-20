@@ -39,9 +39,11 @@ namespace runman
 
         public void CreateRandomStone()
         {
+            Random r = new Random();
+            int randomtime = r.Next(1500, 2500);
             stoneTimer.Stop();
             lastelapsed = stoneTimer.ElapsedMilliseconds;
-            if(lastelapsed > 2000)
+            if(lastelapsed >= randomtime)
             {
                 Stone stone = new Stone(new Point(130, 15),
                 Game.Resources.GetResource("stone"));

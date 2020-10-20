@@ -24,7 +24,6 @@ namespace runman
 
         public override void Update()
         {
-            Console.WriteLine(Position.Y);
             if(jumping == true)
             {
                 if (Position.Y <= maxHeight && up == true)
