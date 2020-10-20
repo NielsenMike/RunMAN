@@ -4,7 +4,7 @@ using System.Threading;
 using Explorer700Library;
 using System.Diagnostics;
 using System.Collections;
-
+using System.Collections.Generic;
 
 namespace runman
 {
@@ -14,9 +14,10 @@ namespace runman
         public Game Game { get; }
         private Background background;
         private RunMan runman;
+        public GameObject gameObject { get; }
         public Stopwatch stoneTimer;
         private long lastelapsed;
-        public ArrayList stones = new ArrayList();
+        public List<Stone> stones = new List<Stone>();
         public Programm() 
         {
             explorer700 = new Explorer700();
@@ -38,6 +39,7 @@ namespace runman
             {
                 Stone stone = new Stone(new Point(130, 15),
                 Game.Resources.GetResource("stone"));
+                stones.Add(stone);
                 Game.CreateGameObject(stone);
                 stoneTimer.Reset();
                 stoneTimer.Start();
@@ -45,6 +47,15 @@ namespace runman
             {
                 stoneTimer.Start();
             }
+        }
+
+        public void DeleteStones()
+        {
+            foreach(Stone s in stones)
+            {
+                Game.DestroyGameObjext(s);
+            }
+            stones.Clear();
         }
 
         public void InitGame()
@@ -64,6 +75,7 @@ namespace runman
                 if (g.GetType() == typeof(RunMan) && other.GetType() == typeof(Stone))
                 {
                     runman.Reset();
+                    this.DeleteStones();
                     Game.Score.PrintScore();
                 }
             };
@@ -81,6 +93,7 @@ namespace runman
             {
                 programm.Game.Run();
                 programm.CreateRandomStone();
+                programm.DeleteStones();
             }
             programm.Game.Stop();
         }
