@@ -10,7 +10,7 @@ namespace runman
         private bool up;
         private bool down;
         int ground = 15;
-        int maxHeight = 50;
+        int maxHeight = 45;
 
 
         public RunMan(Point position, Image graphicImage) : base(position, graphicImage)
