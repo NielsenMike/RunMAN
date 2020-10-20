@@ -93,7 +93,6 @@ namespace runman
             {
                 programm.Game.Run();
                 programm.CreateRandomStone();
-                programm.DeleteStones();
             }
             programm.Game.Stop();
         }
