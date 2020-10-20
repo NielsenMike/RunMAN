@@ -14,7 +14,6 @@ namespace runman
         public Game Game { get; }
         private Background background;
         private RunMan runman;
-        private Stone stone;
         public Stopwatch stoneTimer;
         private long lastelapsed;
         public ArrayList stones = new ArrayList();
@@ -29,8 +28,6 @@ namespace runman
             runman = new RunMan(new Point(16,15), 
                 Game.Resources.GetResource("runman1"));
 
-             stone = new Stone(new Point(130, 15),
-                Game.Resources.GetResource("stone"));
         }
 
         public void CreateRandomStone()
@@ -39,6 +36,8 @@ namespace runman
             lastelapsed = stoneTimer.ElapsedMilliseconds;
             if(lastelapsed > 2000)
             {
+                Stone stone = new Stone(new Point(130, 15),
+                Game.Resources.GetResource("stone"));
                 Game.CreateGameObject(stone);
                 stoneTimer.Reset();
                 stoneTimer.Start();
@@ -50,7 +49,6 @@ namespace runman
 
         public void InitGame()
         {
-            stones.Add(stone);
             Game.CreateGameObject(background);
             Game.CreateGameObject(runman);
         }
@@ -66,7 +64,6 @@ namespace runman
                 if (g.GetType() == typeof(RunMan) && other.GetType() == typeof(Stone))
                 {
                     runman.Reset();
-                    Game.DestroyGameObjext(stone);
                     Game.Score.PrintScore();
                 }
             };
