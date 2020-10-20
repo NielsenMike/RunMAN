@@ -53,7 +53,7 @@ namespace runman
         public void CreateGameObject(GameObject gameObject)
         {
             gameObjects.Add(gameObject);
-            foreach (Component c in gameObject.Components)
+            foreach (Component c in gameObject.Components.ToArray())
             {
                 if (c != null && c.GetType() == typeof(BoxCollider))
                 {
@@ -66,7 +66,7 @@ namespace runman
         public void DestroyGameObjext(GameObject gameObject)
         {
             gameObjects.Remove(gameObject);
-            foreach (Component c in gameObject.Components)
+            foreach (Component c in gameObject.Components.ToArray())
             {
                 if (c != null && c.GetType() == typeof(BoxCollider))
                 {
@@ -106,16 +106,23 @@ namespace runman
 
         private void Update()
         {
-            foreach (GameObject g in gameObjects)
+            foreach (GameObject g in gameObjects.ToArray())
             {
-                g.Update();
+                if (g.Position.X > 0)
+                {
+                    g.Update();
+                }
+                else
+                {
+                    DestroyGameObjext(g);
+                }
             }
             CollisonDetection.DetectCollison();
         }
 
         private void Draw()
         {
-            foreach (GameObject g in gameObjects)
+            foreach (GameObject g in gameObjects.ToArray())
             {
                 DebugDraw(g);
                 explorer700.Display.Graphics.DrawImage(g.GraphicImage,

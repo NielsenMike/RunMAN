@@ -15,11 +15,12 @@ namespace runman
 
         public override void Update()
         {
-            BoxCollider.Update();
+            
             
             int x = Position.X - speed;
             Position = new Point(x, Position.Y);
 
+            BoxCollider.Update();
         }
         
     }
