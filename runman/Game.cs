@@ -76,11 +76,6 @@ namespace runman
             }
         }
 
-        public void Start()
-        {
-            Score.StartScore();
-        }
-
         public void Stop()
         {
             explorer700.Buzzer.Beep(0);

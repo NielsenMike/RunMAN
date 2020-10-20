@@ -27,7 +27,7 @@ namespace runman
 
         public void StartScore()
         {
-            Timer.Reset();
+            Timer.Start();
         }
 
         public void PrintScore()
@@ -37,6 +37,7 @@ namespace runman
             scorevalue = scorevalue / 100;
             Console.WriteLine("Final Score was: " + Scorevalue + ". Congratulations!");
             scorevalue = 0;
+            Timer.Reset();
         }
     }
 }

@@ -18,6 +18,9 @@ namespace runman
         public Stopwatch stoneTimer;
         private long lastelapsed;
         public List<Stone> stones = new List<Stone>();
+
+        private bool startGame = false;
+        
         public Programm() 
         {
             explorer700 = new Explorer700();
@@ -61,19 +64,25 @@ namespace runman
             stones.Clear();
         }
 
+        public bool HasStarted()
+        {
+            return startGame;
+        }
+
         public void InitEvents()
         {
             Game.InputHandler.JumpEvent += runman.Jump;
             Game.InputHandler.StopEvent += Game.Stop;
             Game.InputHandler.StartEvent += () =>
             {
-                CreateRandomStone();
+                startGame = true;
                 Game.Score.StartScore();
             };
             Game.CollisonDetection.CollisionEvent += (GameObject g, GameObject other) =>
             {
                 if (g.GetType() == typeof(RunMan) && other.GetType() == typeof(Stone))
                 {
+                    startGame = false;
                     runman.Reset();
                     DeleteStones();
                     Game.Score.PrintScore();
@@ -85,13 +94,15 @@ namespace runman
         {
             Programm programm = new Programm();
             programm.InitEvents();
-            programm.Game.Start();
             programm.stoneTimer = Stopwatch.StartNew();
             programm.stoneTimer.Start();
             while (programm.Game.IsRunning())
             {
                 programm.Game.Run();
-                programm.CreateRandomStone();
+                if (programm.HasStarted())
+                {
+                    programm.CreateRandomStone();
+                }
             }
             programm.Game.Stop();
         }
