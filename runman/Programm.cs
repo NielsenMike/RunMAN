@@ -7,30 +7,57 @@ namespace runman
 {
     public class Programm
     {
+        private Explorer700 explorer700;
+        public Game Game { get; }
+        private Background background;
+        private RunMan runman;
+        public Programm()
+        {
+            explorer700 = new Explorer700();
+            Game = new Game(explorer700);
+            
+            background = new Background(new Point(64,32), 
+                Game.Resources.GetResource("background"));
+            
+            runman = new RunMan(new Point(16,15), 
+                Game.Resources.GetResource("runman1"));
+        }
+
+        public void CreateRandomStone()
+        {
+            // Here Create stones
+        }
+
+        public void InitGame()
+        {
+            Game.CreateGameObject(background);
+            Game.CreateGameObject(runman);
+        }
+
+        public void InitEvents()
+        {
+            Game.InputHandler.JumpEvent += runman.Jump;
+            Game.InputHandler.StartEvent += Game.Start;
+            Game.InputHandler.StopEvent += Game.Stop;
+            
+            Game.CollisonDetection.CollisionEvent += () =>
+            {
+                runman.Reset();
+                Game.Score.PrintScore();
+            };
+        }
+
         static void Main(string[] args)
         {
-            Explorer700 explorer700 = new Explorer700();
-            Game game = new Game(explorer700);
-            
-            Background backgorund = new Background(new Point(64,32), 
-                game.Resources.GetResource("background"));
-            
-            RunMan runman = new RunMan(new Point(16,15), 
-                game.Resources.GetResource("runman1"));
-            
-            Stone stone = new Stone(new Point(130,15), 
-                game.Resources.GetResource("stone"));
-
-            game.InputHandler.JumpEvent += runman.Jump;
-            game.InputHandler.StartEvent += game.Start;
-            game.InputHandler.StopEvent += game.Stop;
-            game.InputHandler.StopEvent += runman.Reset;
-
-            game.Start();
-            game.CreateGameObject(backgorund);
-            game.CreateGameObject(runman);
-            game.CreateGameObject(stone);
-            game.Run();
+            Programm programm = new Programm();
+            programm.InitEvents();
+            programm.InitGame();
+            programm.Game.Start();
+            while (programm.Game.IsRunning())
+            {
+                programm.Game.Run();
+                programm.CreateRandomStone();
+            }
         }
     }
 }

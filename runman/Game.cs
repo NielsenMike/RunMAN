@@ -11,7 +11,7 @@ using Unosquare.WiringPi;
 
 namespace runman
 {
-    class Game
+    public class Game
     {
         public static int ScreenHeight = 64;
         public static int ScreenWidth = 128;
@@ -38,7 +38,6 @@ namespace runman
             CollisonDetection = new CollisonDetection();
             gameObjects = new List<GameObject>();
             InitResources();
-            CollisonDetection.CollisionEvent += Stop;
         }
 
         // Init new resources here!!
@@ -90,20 +89,20 @@ namespace runman
             explorer700.Led1.Enabled = false;
             explorer700.Led2.Enabled = false;
             explorer700.Display.Clear();
-            Score.PrintScore();
             running = false;
         }
 
         public void Run()
         {
-            while (running)
-            {
-                BeginScene();
-                Update();
-                Draw();
-                EndScene();
-            }
+            BeginScene();
+            Update();
+            Draw();
             EndScene();
+        }
+
+        public bool IsRunning()
+        {
+            return running;
         }
 
 
