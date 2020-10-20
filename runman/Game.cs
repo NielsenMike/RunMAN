@@ -78,7 +78,7 @@ namespace runman
 
         public void Stop()
         {
-            explorer700.Buzzer.Beep(0);
+            explorer700.Buzzer.Beep(200);
             explorer700.Led1.Enabled = false;
             explorer700.Led2.Enabled = false;
             explorer700.Display.Clear();
@@ -119,7 +119,6 @@ namespace runman
         {
             foreach (GameObject g in gameObjects.ToArray())
             {
-                DebugDraw(g);
                 explorer700.Display.Graphics.DrawImage(g.GraphicImage,
                     PositionToScreen(g.Position, g.GraphicImage.Size));
             }

@@ -39,8 +39,8 @@ namespace runman
 
         public void CreateRandomStone()
         {
-            Random r = new Random();
-            int randomtime = r.Next(1500, 2500);
+            Random r = new Random((int)stoneTimer.ElapsedMilliseconds);
+            int randomtime = r.Next(1000, 2500);
             stoneTimer.Stop();
             lastelapsed = stoneTimer.ElapsedMilliseconds;
             if(lastelapsed >= randomtime)
