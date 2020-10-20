@@ -28,6 +28,9 @@ namespace runman
             
             runman = new RunMan(new Point(16,15), 
                 Game.Resources.GetResource("runman1"));
+            
+            Game.CreateGameObject(background);
+            Game.CreateGameObject(runman);
 
         }
 
@@ -60,24 +63,21 @@ namespace runman
             stones.Clear();
         }
 
-        public void InitGame()
-        {
-            Game.CreateGameObject(background);
-            Game.CreateGameObject(runman);
-        }
-
         public void InitEvents()
         {
             Game.InputHandler.JumpEvent += runman.Jump;
-            Game.InputHandler.StartEvent += Game.Start;
             Game.InputHandler.StopEvent += Game.Stop;
-            
+            Game.InputHandler.StartEvent += () =>
+            {
+                CreateRandomStone();
+                Game.Score.StartScore();
+            };
             Game.CollisonDetection.CollisionEvent += (GameObject g, GameObject other) =>
             {
                 if (g.GetType() == typeof(RunMan) && other.GetType() == typeof(Stone))
                 {
                     runman.Reset();
-                    this.DeleteStones();
+                    DeleteStones();
                     Game.Score.PrintScore();
                 }
             };
@@ -87,7 +87,6 @@ namespace runman
         {
             Programm programm = new Programm();
             programm.InitEvents();
-            programm.InitGame();
             programm.Game.Start();
             programm.stoneTimer = Stopwatch.StartNew();
             programm.stoneTimer.Start();
