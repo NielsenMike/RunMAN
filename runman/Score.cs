@@ -10,7 +10,6 @@ namespace runman
 
         public Score()
         {
-            Timer = Stopwatch.StartNew();
             scorevalue = 0;
         }
 
@@ -27,7 +26,7 @@ namespace runman
 
         public void StartScore()
         {
-            Timer.Start();
+            Timer = Stopwatch.StartNew();
         }
 
         public void PrintScore()

@@ -45,7 +45,7 @@ namespace runman
             lastelapsed = stoneTimer.ElapsedMilliseconds;
             if(lastelapsed >= randomtime)
             {
-                Stone stone = new Stone(new Point(130, 15),
+                Stone stone = new Stone(new Point(130, 10),
                 Game.Resources.GetResource("stone"));
                 stones.Add(stone);
                 Game.CreateGameObject(stone);
