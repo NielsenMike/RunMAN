@@ -23,7 +23,6 @@ namespace runman
             if(key.Keys == Keys.Center)
             {
                 StopEvent?.Invoke();
-                Console.WriteLine("stop");
             }
             else if (key.Keys == Keys.Up)
             {

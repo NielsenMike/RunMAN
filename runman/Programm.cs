@@ -11,6 +11,7 @@ namespace runman
         public Game Game { get; }
         private Background background;
         private RunMan runman;
+        private Stone stone;
         public Programm()
         {
             explorer700 = new Explorer700();
@@ -21,17 +22,21 @@ namespace runman
             
             runman = new RunMan(new Point(16,15), 
                 Game.Resources.GetResource("runman1"));
+            
+            stone = new Stone(new Point(128,15), 
+                Game.Resources.GetResource("stone"));
         }
 
         public void CreateRandomStone()
         {
-            // Here Create stones
+            
         }
 
         public void InitGame()
         {
             Game.CreateGameObject(background);
             Game.CreateGameObject(runman);
+            Game.CreateGameObject(stone);
         }
 
         public void InitEvents()
@@ -40,10 +45,14 @@ namespace runman
             Game.InputHandler.StartEvent += Game.Start;
             Game.InputHandler.StopEvent += Game.Stop;
             
-            Game.CollisonDetection.CollisionEvent += () =>
+            Game.CollisonDetection.CollisionEvent += (GameObject g, GameObject other) =>
             {
-                runman.Reset();
-                Game.Score.PrintScore();
+                if (g.GetType() == typeof(RunMan) && other.GetType() == typeof(Stone))
+                {
+                    runman.Reset();
+                    Game.DestroyGameObjext(stone);
+                    Game.Score.PrintScore();
+                }
             };
         }
 
@@ -52,12 +61,12 @@ namespace runman
             Programm programm = new Programm();
             programm.InitEvents();
             programm.InitGame();
-            programm.Game.Start();
             while (programm.Game.IsRunning())
             {
                 programm.Game.Run();
                 programm.CreateRandomStone();
             }
+            programm.Game.Stop();
         }
     }
 }

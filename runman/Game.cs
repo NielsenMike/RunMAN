@@ -30,7 +30,7 @@ namespace runman
 
         public Game(Explorer700 exp)
         {
-            running = false;
+            running = true;
             explorer700 = exp;
             Resources = new Resources();
             Score = new Score();
@@ -78,8 +78,6 @@ namespace runman
 
         public void Start()
         {
-            running = true;
-            gameWatch = Stopwatch.StartNew();
             Score.StartScore();
         }
 
@@ -134,7 +132,7 @@ namespace runman
         
         private void BeginScene()
         {
-            gameWatch.Start();
+            gameWatch = Stopwatch.StartNew();
             currentMs = 0;
             explorer700.Display.Update();
         }
