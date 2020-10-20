@@ -10,7 +10,7 @@ namespace runman
         private bool up;
         private bool down;
         int ground = 15;
-        int maxHeight = 45;
+        int maxHeight = 50;
 
 
         public RunMan(Point position, Image graphicImage) : base(position, graphicImage)
@@ -24,13 +24,14 @@ namespace runman
 
         public override void Update()
         {
+            Console.WriteLine(Position.Y);
             if(jumping == true)
             {
                 if (Position.Y <= maxHeight && up == true)
                 {
-                    int y = Position.Y + 5;
+                    int y = Position.Y + 10;
                     Position = new Point(Position.X, y);
-                    if(Position.Y == maxHeight)
+                    if(Position.Y >= maxHeight)
                     {
                         up = false;
                         down = true;
@@ -38,9 +39,9 @@ namespace runman
                 }
                 else if (down == true)
                 {
-                    int y = Position.Y - 5;
+                    int y = Position.Y - 10;
                     Position = new Point(Position.X, y);
-                    if(Position.Y == ground)
+                    if(Position.Y <= ground)
                     {
                         down = false;
                         jumping = false;

@@ -91,6 +91,7 @@ namespace runman
             while (programm.Game.IsRunning())
             {
                 programm.Game.Run();
+                programm.CreateRandomStone();
             }
             programm.Game.Stop();
         }
